@@ -3,6 +3,7 @@ package softwaredev2.todolist_webapp;
 
 import ToDoList_DB.Queries.UserQueries;
 import ToDoList_DB.Users.User;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,12 +19,22 @@ import java.sql.SQLException;
 public class MainMenuServlet extends HttpServlet {
     User user;
 
-    public void init(int userID) {
+    public void init() {
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try {
-            user = UserQueries.query_User(connectToDB(), userID);
+            user = UserQueries.query_User(connectToDB(), Integer.parseInt(request.getParameter("userID")));
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        response.setContentType("text/html");
+
+        // Hello
+        PrintWriter out = response.getWriter();
+        out.println("<html><body>");
+        out.println("<h1>" + user.getUserName() + "</h1>");
+        out.println("</body></html>");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,6 +44,7 @@ public class MainMenuServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + user.getUserName() + "</h1>");
+        out.println("<p> Test Message </p>");
         out.println("</body></html>");
     }
 
