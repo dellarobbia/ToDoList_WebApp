@@ -1,8 +1,8 @@
 package softwaredev2.todolist_webapp;
 
-
+import ToDoList_DB.Queries.ListItemQueries;
 import ToDoList_DB.Queries.UserListQueries;
-import ToDoList_DB.Queries.UserQueries;
+import ToDoList_DB.UserLists.ToDoListItem;
 import ToDoList_DB.UserLists.UserList;
 import ToDoList_DB.Users.User;
 import jakarta.servlet.ServletException;
@@ -13,31 +13,37 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@WebServlet(name = "mainMenuServlet", value = "/main_menu")
-public class MainMenuServlet extends HttpServlet {
-    User user;
-    UserList toDoList;
+@WebServlet(name = "addItemServlet", value = "/add_item")
+public class AddItemServlet extends HttpServlet {
 
-    public void init() {
+    public void init(){
+
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+
+        UserList toDoList = (UserList) session.getAttribute("toDoList");
+        User user = (User) session.getAttribute("user");
+
+        String itemDescription = (String) request.getAttribute("itemDescription");
+
+        String itemDueDate = (String) request.getAttribute("itemDueDate");
+
         try {
-            user = UserQueries.query_User(connectToDB(), Integer.parseInt(request.getParameter("userID")));
+            ListItemQueries.query_insertNewListItem(connectToDB(), toDoList.getUserListID(), new ToDoListItem(itemDescription, itemDueDate));
             toDoList = UserListQueries.query_getList(connectToDB(), user.getUserID());
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        HttpSession session = request.getSession();
+        request.setAttribute("user", user);
+        request.setAttribute("toDoList", toDoList);
 
-        session.setAttribute("user", user);
-        session.setAttribute("toDoList", toDoList);
         request.getRequestDispatcher("main_menu.jsp").forward(request, response);
     }
 

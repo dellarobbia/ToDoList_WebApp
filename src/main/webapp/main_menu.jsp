@@ -1,5 +1,5 @@
-<jsp:useBean id="toDoListItems" scope="request" class="java.lang.String"/>
-<jsp:useBean id="user" scope="request" class="ToDoList_DB.Users.User"/>
+<jsp:useBean id="toDoList" scope="session" class="ToDoList_DB.UserLists.UserList"/>
+<jsp:useBean id="user" scope="session" class="ToDoList_DB.Users.User"/>
 <%--
   Created by IntelliJ IDEA.
   User: drewm
@@ -15,25 +15,24 @@
 <body>
     <h1>${user.getUserName()}'s To-Do List</h1>
     <div title="toDoListItems">
-        <p>${toDoListItems}</p>
+        <p>${toDoList.toString()}</p>
     </div>
     <fieldset>
-        <legend>Select an option</legend>
-        <div>
-            <input type="radio" id="addToDoItem" name="toDoListOptionRadio" value="addToDoItem">
-            <label for="addToDoItem">Add To-Do Item</label>
-        </div>
-        <div>
-            <input type="radio" id="completeItem" name="toDoListOptionRadio" value="completeItem">
-            <label for="completeItem">Mark an item complete</label>
-        </div>
-        <div>
-            <input type="radio" id="logout" name="toDoListOptionRadio" value="logout">
-            <label for="logout">Log Out</label>
-        </div>
-        <div>
-            <button type="submit">Submit</button>
-        </div>
+        <legend>Actions</legend>
+            <h3>Add Item</h3>
+            <form action="${pageContext.request.contextPath}/add_item" method="post">
+                <label>
+                    Item To-Do: <input type="text" name="itemDescription">
+                </label>
+                <label>
+                    Due Date: <input type="text" name="itemDueDate">
+                </label>
+                <input type="submit" value="Add Item">
+            </form>
+        <br/>
+        <input type="button" value="Mark Item Complete" onclick="window.location='/complete_item'"/>
+        <br/>
+        <input type="button" value="Log Out" onclick="window.location='/index.jsp'"/>
     </fieldset>
 </body>
 </html>
