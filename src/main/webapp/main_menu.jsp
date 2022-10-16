@@ -30,7 +30,13 @@
                 <input type="submit" value="Add Item">
             </form>
         <br/>
-        <input type="button" value="Mark Item Complete" onclick="window.location='/complete_item'"/>
+        <h3>Select an item to mark "complete"</h3>
+        <form action="${pageContext.request.contextPath}/complete_item" method="post">
+            <label>
+                Item# to complete: <input type="text" name="listAddress">
+            </label>
+            <input type="submit" value="Complete Item">
+        </form>
         <br/>
         <input type="button" value="Log Out" onclick="window.location='/index.jsp'"/>
     </fieldset>
