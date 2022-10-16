@@ -14,6 +14,7 @@
 </head>
 <body>
     <h1>${user.getUserName()}'s To-Do List</h1>
+    <h2>User ID# ${user.getUserID()}</h2>
     <div title="toDoListItems">
         <p>${toDoList.toHTML()}</p>
     </div>
