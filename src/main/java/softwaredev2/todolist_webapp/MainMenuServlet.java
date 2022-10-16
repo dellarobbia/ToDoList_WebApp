@@ -34,6 +34,10 @@ public class MainMenuServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
+        String toDoListHTML = toDoList.toString();
+        toDoListHTML = toDoListHTML.replaceAll("(\n)", "<br/>");
+        request.setAttribute("toDoListHTML", toDoListHTML);
+
         HttpSession session = request.getSession();
 
         session.setAttribute("user", user);

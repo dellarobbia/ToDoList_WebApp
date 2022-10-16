@@ -1,4 +1,4 @@
-<jsp:useBean id="toDoList" scope="session" class="ToDoList_DB.UserLists.UserList"/>
+<jsp:useBean id="toDoListHTML" scope="request" class="java.lang.String"/>
 <jsp:useBean id="user" scope="session" class="ToDoList_DB.Users.User"/>
 <%--
   Created by IntelliJ IDEA.
@@ -15,7 +15,7 @@
 <body>
     <h1>${user.getUserName()}'s To-Do List</h1>
     <div title="toDoListItems">
-        <p>${toDoList.toString()}</p>
+        <p>${toDoListHTML}</p>
     </div>
     <fieldset>
         <legend>Actions</legend>

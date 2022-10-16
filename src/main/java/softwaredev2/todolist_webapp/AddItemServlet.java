@@ -30,9 +30,9 @@ public class AddItemServlet extends HttpServlet {
         UserList toDoList = (UserList) session.getAttribute("toDoList");
         User user = (User) session.getAttribute("user");
 
-        String itemDescription = (String) request.getAttribute("itemDescription");
+        String itemDescription = request.getParameter("itemDescription");
 
-        String itemDueDate = (String) request.getAttribute("itemDueDate");
+        String itemDueDate = request.getParameter("itemDueDate");
 
         try {
             ListItemQueries.query_insertNewListItem(connectToDB(), toDoList.getUserListID(), new ToDoListItem(itemDescription, itemDueDate));
@@ -41,8 +41,7 @@ public class AddItemServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        request.setAttribute("user", user);
-        request.setAttribute("toDoList", toDoList);
+        session.setAttribute("toDoList", toDoList);
 
         request.getRequestDispatcher("main_menu.jsp").forward(request, response);
     }

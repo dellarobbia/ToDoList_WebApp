@@ -63,7 +63,7 @@ public class UserList implements UserLists {
         int displayNumber;
         for(int i = 0; i < userListItems.size(); i++){
             displayNumber = i + 1;
-            userListToString = displayNumber + ": " + userListItems.get(i).toString() + "\n";
+            userListToString = userListToString + displayNumber + ": " + userListItems.get(i).toString() + "\n";
         }
 
         return userListToString;
