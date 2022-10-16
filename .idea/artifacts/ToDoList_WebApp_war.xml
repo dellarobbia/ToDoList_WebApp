@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ToDoList_WebApp:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>ToDoList_WebApp</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="ToDoList_WebApp-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ToDoList_WebApp:war exploded" />
+    </root>
+  </artifact>
+</component>

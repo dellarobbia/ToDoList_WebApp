@@ -1,7 +1,9 @@
 package softwaredev2.todolist_webapp;
 
 
+import ToDoList_DB.Queries.UserListQueries;
 import ToDoList_DB.Queries.UserQueries;
+import ToDoList_DB.UserLists.UserList;
 import ToDoList_DB.Users.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +20,7 @@ import java.sql.SQLException;
 @WebServlet(name = "mainMenuServlet", value = "/main_menu")
 public class MainMenuServlet extends HttpServlet {
     User user;
+    UserList toDoList;
 
     public void init() {
     }
@@ -25,27 +28,17 @@ public class MainMenuServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try {
             user = UserQueries.query_User(connectToDB(), Integer.parseInt(request.getParameter("userID")));
+            toDoList = UserListQueries.query_getList(connectToDB(), user.getUserID());
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        response.setContentType("text/html");
-
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + user.getUserName() + "</h1>");
-        out.println("</body></html>");
+        request.setAttribute("user", user);
+        request.setAttribute("toDoListItems", toDoList.toString());
+        request.getRequestDispatcher("main_menu.jsp").forward(request, response);
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
 
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + user.getUserName() + "</h1>");
-        out.println("<p> Test Message </p>");
-        out.println("</body></html>");
     }
 
     public void destroy() {

@@ -25,6 +25,10 @@ public class User {
         setUserName(userName);
     }
 
+    public User(){
+
+    }
+
     //Methods
 
     @Override

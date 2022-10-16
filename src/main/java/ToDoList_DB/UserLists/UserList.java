@@ -52,4 +52,20 @@ public class UserList implements UserLists {
             System.out.println(displayNumber + ": " + userListItems.get(i).toString());
         }
     }
+
+    @Override
+    public String toString(){
+        String userListToString;
+        if(userListItems.size() > 0)
+            userListToString = "";
+        else
+            userListToString = "No List Items";
+        int displayNumber;
+        for(int i = 0; i < userListItems.size(); i++){
+            displayNumber = i + 1;
+            userListToString = displayNumber + ": " + userListItems.get(i).toString() + "\n";
+        }
+
+        return userListToString;
+    }
 }
