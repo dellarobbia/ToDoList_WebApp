@@ -31,6 +31,7 @@ public class CompleteItemServlet extends HttpServlet {
 
         int listAddress = Integer.parseInt(request.getParameter("listAddress"));
         ToDoListItem completedItem = toDoList.getUserListItems().get(listAddress - 1);
+        completedItem.setCompleted(true);
 
         try{
             ListItemQueries.query_updateCompletedStatus(connectToDB(), toDoList.getUserListID(), completedItem);

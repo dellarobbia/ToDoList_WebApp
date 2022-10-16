@@ -1,4 +1,4 @@
-<jsp:useBean id="toDoListHTML" scope="request" class="java.lang.String"/>
+<jsp:useBean id="toDoList" scope="session" class="ToDoList_DB.UserLists.UserList"/>
 <jsp:useBean id="user" scope="session" class="ToDoList_DB.Users.User"/>
 <%--
   Created by IntelliJ IDEA.
@@ -15,7 +15,7 @@
 <body>
     <h1>${user.getUserName()}'s To-Do List</h1>
     <div title="toDoListItems">
-        <p>${toDoListHTML}</p>
+        <p>${toDoList.toHTML()}</p>
     </div>
     <fieldset>
         <legend>Actions</legend>
@@ -38,7 +38,9 @@
             <input type="submit" value="Complete Item">
         </form>
         <br/>
-        <input type="button" value="Log Out" onclick="window.location='/index.jsp'"/>
+        <form action="${pageContext.request.contextPath}/logout" method="get">
+            <input type="submit" value="Logout">
+        </form>
     </fieldset>
 </body>
 </html>

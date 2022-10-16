@@ -68,4 +68,9 @@ public class UserList implements UserLists {
 
         return userListToString;
     }
+
+    public String toHTML(){
+        String htmlString = toString().replaceAll("\n", "<br/>");
+        return htmlString;
+    }
 }
